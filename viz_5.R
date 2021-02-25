@@ -1,7 +1,7 @@
 # Required Libraries
-install.packages('ggplot2')
-install.packages('plotly')
-install.packages('htmlwidgets')
+install.packages('ggplot2', repos = "http://cran.us.r-project.org")
+install.packages('plotly', repos = "http://cran.us.r-project.org")
+install.packages('htmlwidgets', repos = "http://cran.us.r-project.org")
 library(ggplot2)
 library(plotly)
 library(htmlwidgets)

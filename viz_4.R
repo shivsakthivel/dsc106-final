@@ -1,7 +1,7 @@
 # Required Libraries
-install.packages("networkD3")
-install.packages("dplyr")
-install.packages("htmlwidgets")
+install.packages("networkD3", repos = "http://cran.us.r-project.org")
+install.packages("dplyr", repos = "http://cran.us.r-project.org")
+install.packages("htmlwidgets", repos = "http://cran.us.r-project.org")
 library(networkD3)
 library(dplyr)
 library(htmlwidgets)

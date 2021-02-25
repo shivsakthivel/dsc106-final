@@ -1,6 +1,6 @@
 # Required Libraries
-install.packages('chorddiag')
-install.packages('htmlwidgets')
+install.packages('chorddiag', repos = "http://cran.us.r-project.org")
+install.packages('htmlwidgets',repos = "http://cran.us.r-project.org")
 library(chorddiag)
 library(htmlwidgets)
 
