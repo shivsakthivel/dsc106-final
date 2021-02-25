@@ -1,0 +1,142 @@
+---
+title: "Visualization Demonstrations"
+output:
+  html_document:
+    df_print: paged
+---
+```{r}
+# Required Libraries
+install.packages('ggplot2', repos = "http://cran.us.r-project.org")
+install.packages('plotly', repos = "http://cran.us.r-project.org")
+install.packages('htmlwidgets', repos = "http://cran.us.r-project.org")
+library(ggplot2)
+library(plotly)
+library(htmlwidgets)
+
+# Importing dataset
+v1 <- read.csv("C:/Users/shivs/Downloads/v1.csv")
+
+# Creating the plot
+p <- ggplot(v1, aes(x, y, fill= Frequency, label = Space.Name)) + 
+  geom_tile() +
+  geom_label(fill = "white") +
+  scale_fill_gradient(low="white", high="red3") +
+  theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank()) +
+  ggtitle("Monopoly Board Space Frequencies")
+
+pp <- ggplotly(p)
+saveWidget(pp, file=paste0( getwd(), "/ggplotlyHeatmap.html"))
+pp
+```
+```{r}
+# Required Libraries
+install.packages('chorddiag', repos = "http://cran.us.r-project.org")
+install.packages('htmlwidgets',repos = "http://cran.us.r-project.org")
+library(chorddiag)
+library(htmlwidgets)
+
+# Importing datasets
+v2 <- read.csv("C:/Users/shivs/Downloads/v2.csv")
+spaces <- read.csv("C:/Users/shivs/Downloads/spaces.csv")
+
+# Converting list of edges into adjacency matrix, then into dataframe
+adjacencyData <- with(v2, table(v2$I_current, v2$I_next))
+m <- as.matrix(adjacencyData)
+df = data.frame("Go" = m[, 1])
+for(i in 2:40){
+  name <- spaces[i, 2]
+  df[name] <- m[, i]
+}
+df = as.matrix(df)
+
+# Creating the plot
+viz_2 <- chorddiag(df, type = "directional", showTicks = F, 
+                   groupnameFontsize = 7, groupnamePadding = 10, margin = 90)
+saveWidget(viz_2, file=paste0( getwd(), "/chord_interactive.html"))
+viz_2
+```
+```{r}
+# Required Libraries
+install.packages('ggplot2', repos = "http://cran.us.r-project.org")
+library(ggplot2)
+
+# Importing the dataset
+v3 <- read.csv("C:/Users/shivs/Downloads/v3.csv")
+
+# Creating the plot
+ggplot(v3, aes(x=Space.Name, y=Profit, fill = Space.Name)) + 
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c("brown4", "chocolate1", "forestgreen") ) +
+  theme(legend.position="none") +
+  ggtitle("The most profitable Community Chest") +
+  xlab("Space") +
+  ylab("Profit (in $)")
+```
+```{r}
+# Required Libraries
+install.packages("networkD3", repos = "http://cran.us.r-project.org")
+install.packages("dplyr", repos = "http://cran.us.r-project.org")
+install.packages("htmlwidgets", repos = "http://cran.us.r-project.org")
+library(networkD3)
+library(dplyr)
+library(htmlwidgets)
+
+# Importing the dataset
+viz_4 <- read.csv("C:/Users/shivs/Downloads/v4.csv")
+
+# Instantiating Chance #1 as the source for all edges
+viz_4$From = c("Chance #1")
+# Removing Chance #1 as a destination
+v4 <- viz_4[-c(4), ]
+nodes <- data.frame(
+  name=c(as.character(v4$From), 
+         as.character(v4$Space.Name)) %>% unique()
+)
+
+v4$IDsource <- match(v4$From, nodes$name)-1 
+v4$IDtarget <- match(v4$Space.Name, nodes$name)-1
+
+plot <- sankeyNetwork(Links = v4, Nodes = nodes,
+                      Source = "IDsource", Target = "IDtarget",
+                      Value = "Count", NodeID = "name",
+                      fontSize = 14, fontFamily = "arial",
+                      sinksRight=FALSE)
+saveWidget(plot, file=paste0( getwd(), "/sankeyChance.html"))
+plot
+```
+
+```{r}
+# Required Libraries
+install.packages('ggplot2', repos = "http://cran.us.r-project.org")
+install.packages('plotly', repos = "http://cran.us.r-project.org")
+install.packages('htmlwidgets', repos = "http://cran.us.r-project.org")
+library(ggplot2)
+library(plotly)
+library(htmlwidgets)
+
+# Importing dataset
+v5 <- read.csv("C:/Users/shivs/Downloads/v5.csv")
+
+# Creating the plot
+p5 <- ggplot(v5, aes(x, y, fill= benefit, label = Space.Name)) + 
+  geom_tile() +
+  geom_label(fill = "white") +
+  scale_fill_gradient(low="white", high="green4") +
+  theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank()) +
+  ggtitle("Monopoly Board Space Profitability")
+
+p5_i <- ggplotly(p5)
+saveWidget(p5_i, file=paste0( getwd(), "/moneyHeatmap.html"))
+p5_i
+```
+
