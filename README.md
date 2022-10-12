@@ -16,7 +16,3 @@ The third party modules used in this project are (Their installations are writte
 6. `chorddiag`
 7. `dplyr`
 8. `networkD3`
-
-The visualizations produced are shown below:
-
-![Profitability of the Spaces](sankeyChance.html)
